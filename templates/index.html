@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Rentals</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='resources/selvita_logo.webp') }}" alt="Selvita Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1>Device Rentals</h1>
+        <div class="buttons">
+            <a class="button" href="{{ url_for('register') }}">Register New Rental</a>
+            <a class="button" href="{{ url_for('history') }}">View Rental History</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Device ID</th>
+                    <th>Email</th>
+                    <th>Rental Date</th>
+                    <th>Return Date</th>
+                    <th>Device Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in rentals %}
+                <tr class="{% if rental.return_date < today_date %}overdue{% endif %}">
+                    <td>{{ rental.device_id }}</td>
+                    <td>{{ rental.email }}</td>
+                    <td>{{ rental.rental_date }}</td>
+                    <td>{{ rental.return_date }}</td>
+                    <td>{{ rental.device_type }}</td>
+                    <td>
+                        <form action="{{ url_for('return_device', id=rental.id) }}" method="post">
+                            <button type="submit" class="button">Return</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="screensaver" class="screensaver hidden">
+        <img src="{{ url_for('static', filename='resources/selvita_logo.webp') }}" alt="Selvita Logo">
+    </div>
+    <script>
+        (function() {
+            let idleTime = 0;
+            const idleLimit = 60; // czas w sekundach po którym uruchamia się wygaszacz
+            const screensaver = document.getElementById('screensaver');
+            
+            function resetIdleTime() {
+                idleTime = 0;
+                if (screensaver && !screensaver.classList.contains('hidden')) {
+                    screensaver.classList.add('hidden');
+                }
+            }
+            
+            function checkIdleTime() {
+                idleTime++;
+                if (idleTime >= idleLimit) {
+                    if (screensaver && screensaver.classList.contains('hidden')) {
+                        screensaver.classList.remove('hidden');
+                    }
+                }
+            }
+            
+            function setupEventListeners() {
+                document.addEventListener('mousemove', resetIdleTime);
+                document.addEventListener('keypress', resetIdleTime);
+                document.addEventListener('click', resetIdleTime);
+            }
+            
+            setupEventListeners();
+            setInterval(checkIdleTime, 1000); // Sprawdzaj co sekundę
+            
+        })();
+    </script>
+    
+</body>
+</html>

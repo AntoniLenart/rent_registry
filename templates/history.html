@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='resources/selvita_logo.webp') }}" alt="Selvita Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1>Rental History</h1>
+        <a class="button" href="{{ url_for('index') }}">Back to Rentals</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Device ID</th>
+                    <th>Email</th>
+                    <th>Rental Date</th>
+                    <th>Return Date</th>
+                    <th>Device Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in history %}
+                <tr>
+                    <td>{{ record.device_id }}</td>
+                    <td>{{ record.email }}</td>
+                    <td>{{ record.rental_date }}</td>
+                    <td>{{ record.return_date }}</td>
+                    <td>{{ record.device_type }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

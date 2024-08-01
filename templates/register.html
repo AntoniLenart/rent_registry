@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Device Rental</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='resources/selvita_logo.webp') }}" alt="Selvita Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1>Register Device Rental</h1>
+        <form action="{{ url_for('register') }}" method="post">
+            <div class="form-group">
+                <label for="device_id">Device ID:</label>
+                <input type="text" id="device_id" name="device_id" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="return_date">Return Date:</label>
+                <input type="date" id="return_date" name="return_date" required>
+            </div>
+            <div class="form-group">
+                <label for="device_type">Device Type:</label>
+                <select id="device_type" name="device_type" required>
+                    <option value="mouse_wired">Mysz Przewodowa</option>
+                    <option value="mouse_wireless">Mysz Bezprzewodowa</option>
+                    <option value="keyboard">Klawiatura</option>
+                    <option value="headphones">Słuchawki</option>
+                    <option value="jabra">Jabra</option>
+                    <option value="speakers">Głośniki</option>
+                    <option value="webcam">Kamerka</option>
+                    <option value="projector">Rzutnik</option>
+                    <option value="other">Inne</option>
+                </select>
+            </div>
+            <button type="submit" class="button">Register</button>
+        </form>
+        <a class="button" href="{{ url_for('index') }}">Back to Rentals</a>
+    </div>
+</body>
+</html>
